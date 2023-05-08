@@ -1,0 +1,6 @@
+GET http://localhost:{{port}}/api/v1/shop/signUp
+Accept: application/json
+
+###
+POST http://localhost:{{port}}/api/v1/shop/post
+Accept: application/json

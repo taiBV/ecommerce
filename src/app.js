@@ -13,10 +13,14 @@ app.use(compression())
 const PORT = 1998
 
 
-app.listen(PORT,() => {
+app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`)
 })
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// router
+const routerApp = require('./routes')
+
+// ...
+
+app.use('/api', routerApp)
+
 module.exports = app
