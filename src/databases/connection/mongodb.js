@@ -9,7 +9,7 @@ class Database {
     }
 
     connect(type = 'MongoDB') {
-        mongoose.connect('mongodb://localhost:27017')
+        mongoose.connect('mongodb://localhost:27017/ecommerce')
             .then(r => {
                 console.log(`Connect MongoDB success with : ${this.numConnect()} connections !`)
             })

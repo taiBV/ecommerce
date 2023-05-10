@@ -1,13 +1,20 @@
-class ShopController{
+const ShopService = require("../../services/ShopService")
+
+class ShopController {
     constructor() {
         console.log('constructor ShopController')
     }
-    signUp(req,res,next){
-        // console.log('signUp')
+
+    async signUp(req, res, next) {
+
+        const storeShop = await ShopService.signUp(req.body);
+
         return res.json({
             code: 1,
-            msg : 'signUp 22'
+            data: storeShop,
+            msg: 'signUp 22'
         });
     }
 }
+
 module.exports = ShopController

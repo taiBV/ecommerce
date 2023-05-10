@@ -1,6 +1,11 @@
 GET {{url}}/api/v1/shop/signUp
 Accept: application/json
-
 ###
-POST {{url}}/api/v1/shop/post
+POST http://localhost:1998/api/v1/shop/signUp
 Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Shop 6",
+  "password": "123456"
+}

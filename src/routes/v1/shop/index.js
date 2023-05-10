@@ -7,6 +7,6 @@ const ShopController = require("../../../controllers/Shop/ShopController");
 
 const shopController = new ShopController()
 
-router.get('/signUp', shopController.signUp)
+router.post('/signUp', shopController.signUp)
 
 module.exports = router
