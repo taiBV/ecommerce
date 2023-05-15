@@ -47,5 +47,14 @@ class AuthHelper{
             accessToken, refreshToken
         }
     }
+    static verifyApiKey(req, res, next){
+        console.log('verifyApiKey', req.headers.apikey)
+        req.headers.perrmissons = ['taibv']
+        return next();
+    }
+    static checkPermission(req, res, next){
+        console.log('checkPermission')
+        return next();
+    }
 }
 module.exports = AuthHelper

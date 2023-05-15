@@ -21,9 +21,11 @@ app.listen(PORT, () => {
 })
 // router
 const routerApp = require('./routes')
+const helper = require("../src/utils/AuthHelper")
 
-// ...
+// middleware
+app.use(helper.verifyApiKey);
 
-app.use('/api', routerApp)
+app.use('/api', helper.checkPermission,routerApp)
 
 module.exports = app
