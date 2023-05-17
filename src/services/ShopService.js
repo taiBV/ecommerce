@@ -13,7 +13,7 @@ class ShopService {
         let obj = {}
         const storeShop = await new Shop(params).save();
         if (storeShop) {
-            throw new APIError("OK", 200)
+            throw new APIError("storeShop is exist")
         }
         obj.data = storeShop
         obj.token = AuthHelper.genToken(storeShop);

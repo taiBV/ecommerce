@@ -5,33 +5,19 @@ const HttpStatusCode = {
     INTERNAL_SERVER: 500,
 }
 
-// class BaseError extends Error {
-//
-//     constructor(name, httpCode, description, isOperational) {
-//         super(description);
-//         Object.setPrototypeOf(this, new.target.prototype);
-//
-//         this.name = name;
-//         this.httpCode = httpCode;
-//         this.isOperational = isOperational;
-//
-//         // Error.captureStackTrace(this);
-//     }
-// }
-
 //free to extend the BaseError
 class APIError extends Error {
-    constructor(message, status = HttpStatusCode.INTERNAL_SERVER) {
+    constructor(message, statusCode = HttpStatusCode.INTERNAL_SERVER, data = "") {
         super(message);
-        this.status = status
+        this.statusCode = statusCode
+        this.data = data
     }
 }
 
 const ErrorHandler = fn => {
-    console.log('ErrorHandler', fn)
     return (req, res, next) => {
         fn(req, res, next).catch(next)
     }
 }
 
-module.exports = {APIError,ErrorHandler}
+module.exports = {APIError, ErrorHandler}

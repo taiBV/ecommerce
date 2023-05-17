@@ -9,7 +9,6 @@ class ShopController {
     }
 
     async signUp(req, res, next) {
-
         return res.status(201).json(await ShopService.signUp(req.body))
     }
 }

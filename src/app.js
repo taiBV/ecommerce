@@ -40,13 +40,14 @@ app.use((req, res, next) => {
 });
 app.use((err, req, res, next) => {
     // Xử lý lỗi theo ý muốn của bạn
-    console.error(err);
+    // console.error(err);
 
-    const status = err.status || 500
+    const statusCode = err.statusCode || 500
     // Phản hồi lại lỗi cho client
-    return res.status(status).json({
-        status: status,
-        message: err.message || "Service Error !"
+    return res.status(statusCode).json({
+        statusCode: statusCode,
+        message: err.message || "Service Error !",
+        data: err.data || null
     })
 });
 module.exports = app
