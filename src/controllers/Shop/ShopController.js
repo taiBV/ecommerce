@@ -1,6 +1,7 @@
 const ShopService = require("../../services/ShopService")
 const AuthHelper = require("../../utils/AuthHelper")
-
+require("../../core/handleError")
+const {APIError} = require("../../core/handleError");
 class ShopController {
     constructor() {
         console.log('constructor ShopController')
@@ -9,24 +10,7 @@ class ShopController {
 
     async signUp(req, res, next) {
 
-        let obj = {}
-        const storeShop = await ShopService.signUp(req.body);
-
-        if (!storeShop) {
-            return res.json({
-                code: 0,
-                data: {},
-                msg: 'error'
-            });
-        }
-        obj.data = storeShop
-        obj.token = AuthHelper.genToken(storeShop);
-
-        return res.json({
-            code: 1,
-            data: obj,
-            msg: 'success'
-        });
+        return res.status(201).json(await ShopService.signUp(req.body))
     }
 }
 

@@ -4,9 +4,10 @@ const router = express.Router()
 require("../../../controllers/Shop/ShopController")
 
 const ShopController = require("../../../controllers/Shop/ShopController");
+const {ErrorHandler} = require("../../../core/handleError");
 
 const shopController = new ShopController()
 
-router.post('/signUp', shopController.signUp)
+router.post('/signUp', ErrorHandler(shopController.signUp))
 
 module.exports = router

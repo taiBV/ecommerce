@@ -22,10 +22,31 @@ app.listen(PORT, () => {
 // router
 const routerApp = require('./routes')
 const helper = require("../src/utils/AuthHelper")
+const {APIError} = require("./core/handleError");
+// const {ErrorHandler} = require("./core/handleError");
 
 // middleware
 app.use(helper.verifyApiKey);
 
 app.use('/api', helper.checkPermission,routerApp)
 
+// handle error
+app.use((req, res, next) => {
+    // Xử lý lỗi theo ý muốn của bạn
+    const err = new Error("API eROR")
+    err.status = 500
+    // Phản hồi lại lỗi cho client
+    next(err)
+});
+app.use((err, req, res, next) => {
+    // Xử lý lỗi theo ý muốn của bạn
+    console.error(err);
+
+    const status = err.status || 500
+    // Phản hồi lại lỗi cho client
+    return res.status(status).json({
+        status: status,
+        message: err.message || "Service Error !"
+    })
+});
 module.exports = app
