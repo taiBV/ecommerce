@@ -5,6 +5,18 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Shop 6",
+  "phone" : "0326913212",
+  "name": "Shop tai",
+  "password": "123456"
+}
+
+###
+POST http://localhost:1998/api/v1/shop/login
+apiKey: taibv
+Accept: application/json
+Content-Type: application/json
+
+{
+  "phone" : "0326913212",
   "password": "123456"
 }
