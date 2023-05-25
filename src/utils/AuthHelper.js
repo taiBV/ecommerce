@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const {APIError} = require("../core/Response");
 const privateKey = `-----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAseET4aBpbko910G3QUNZFgNcMh/7AXSUS45nkS95D/WQO884
 fztdvYAx0mBa5MU1vxmUZ1YpNn5leCzn7TwCxg/LNVEJoayKTHnU6UJNpBDpHfQ7
@@ -27,34 +28,37 @@ cUzDAoGAEUokBfF9zpUpbz8oO2XJi0NpiiSPNvCkT87JhbYUcwJwPEjOSJz5qesG
 VpUFpm2xHOGCh56Y+1Bvzrq6eBr97p0YcFw4xRtTbig6mbZJEwU=
 -----END RSA PRIVATE KEY-----`
 
-class AuthHelper{
+class AuthHelper {
     constructor() {
     }
-    static genToken(storeShop){
+
+    static genToken(storeShop) {
         const accessToken = jwt.sign({info: storeShop}, privateKey, {algorithm: 'RS256', expiresIn: "7d"});
         const refreshToken = jwt.sign({info: storeShop}, privateKey, {algorithm: 'RS256', expiresIn: "365d"});
 
-        // const verify = jwt.verify(refreshToken, privateKey, function(err, obj) {
-        //     // err
-        //     if (err) {
-        //         console.log('error')
-        //     }
-        //     // console.log('obj', obj)
-        //     // decoded undefined
-        // });
 
         return {
             accessToken, refreshToken
         }
     }
-    static verifyApiKey(req, res, next){
+
+    static verifyApiKey(req, res, next) {
         console.log('verifyApiKey', req.headers.apikey)
         req.headers.perrmissons = ['taibv']
         return next();
     }
-    static checkPermission(req, res, next){
+
+    static verifyToken(token) {
+        return jwt.verify(token, privateKey, (error, obj) => {
+            if (error) throw new APIError(error.message, 401)
+            return obj
+        });
+    }
+
+    static checkPermission(req, res, next) {
         console.log('checkPermission')
         return next();
     }
 }
+
 module.exports = AuthHelper
