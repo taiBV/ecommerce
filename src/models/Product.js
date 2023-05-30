@@ -6,6 +6,7 @@ const schema = new mongoose.Schema({
     product_description: String,
     product_quantity: Number,
     product_price: Number,
+    shop_id: Number,
     product_attributes: {type: Schema.Types.Mixed},
 }, {
     collection: "ProductModel",
