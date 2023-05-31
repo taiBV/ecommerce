@@ -9,22 +9,22 @@
 * */
 const {ProductModel, ProductElectronic, ProductClothing} = require("../models/Product")
 
-class ProductFactory {
-    constructor(params) {
-        this.params = params
+class ProductRepository {
+    constructor() {
+
     }
 
-    create(type) {
+    create(type, params) {
         switch (type) {
             case "CLOTHING":
-                return new ProductClothingRepository(this.params).create()
+                return new ProductClothingRepository(params).create()
             case "ELECTRONIC":
-                return new ProductElectronicRepository(this.params).create()
+                return new ProductElectronicRepository(params).create()
         }
     }
 }
 
-class ProductRepository {
+class ProductFactory {
     constructor(product_name, product_thumb, product_description, product_quantity, product_price, shop_id, product_attributes) {
         this.product_name = product_name
         this.product_thumb = product_thumb
@@ -40,7 +40,7 @@ class ProductRepository {
         return ProductModel.create(this);
     }
 }
-class ProductClothingRepository extends ProductRepository{
+class ProductClothingRepository extends ProductFactory{
     async create() {
         // create attribute
         const saveAttribute = ProductClothing.create(this.product_attributes)
@@ -48,10 +48,11 @@ class ProductClothingRepository extends ProductRepository{
     }
 }
 
-class ProductElectronicRepository extends ProductRepository{
+class ProductElectronicRepository extends ProductFactory{
     async create() {
         // create attribute
         const saveAttribute = ProductElectronic.create(this.product_attributes)
         return super.createProduct()
     }
 }
+module.exports = ProductRepository
