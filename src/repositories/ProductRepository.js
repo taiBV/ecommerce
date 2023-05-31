@@ -8,6 +8,7 @@
     product_attributes: {type: Schema.Types.Mixed},
 * */
 const {ProductModel, ProductElectronic, ProductClothing} = require("../models/Product")
+const {APIError} = require("../core/Response");
 
 class ProductRepository {
     constructor() {
@@ -20,35 +21,43 @@ class ProductRepository {
                 return new ProductClothingRepository(params).create()
             case "ELECTRONIC":
                 return new ProductElectronicRepository(params).create()
+            default:
+                throw new APIError("Type Product not exist")
         }
     }
 }
 
 class ProductFactory {
-    constructor(product_name, product_thumb, product_description, product_quantity, product_price, shop_id, product_attributes) {
-        this.product_name = product_name
-        this.product_thumb = product_thumb
-        this.product_description = product_description
-        this.product_quantity = product_quantity
-        this.product_price = product_price
-        this.shop_id = shop_id
-        this.product_attributes = product_attributes
+    constructor(params){
+        this.product_name = params.product_name
+        this.product_thumb = params.product_thumb
+        this.product_description = params.product_description
+        this.product_quantity = params.product_quantity
+        this.product_price = params.product_price
+        this.shop_id = params.shop_id
+        this.product_attributes = params.product_attributes
     }
 
     async createProduct() {
-        console.log('this ProductRepository createProduct : ', this)
-        return ProductModel.create(this);
+        return await ProductModel.create(this);
     }
 }
 class ProductClothingRepository extends ProductFactory{
+    constructor(params) {
+        super(params);
+    }
     async create() {
         // create attribute
-        const saveAttribute = ProductClothing.create(this.product_attributes)
-        return super.createProduct()
+        const saveAttribute = await ProductClothing.create(this.product_attributes)
+        console.log('saveAttribute', saveAttribute)
+        return await super.createProduct()
     }
 }
 
 class ProductElectronicRepository extends ProductFactory{
+    constructor(params) {
+        super(params);
+    }
     async create() {
         // create attribute
         const saveAttribute = ProductElectronic.create(this.product_attributes)

@@ -10,10 +10,9 @@ class ProductController {
     }
 
     async createProduct(req, res) {
-        console.log('req.body', req.body)
-        // const productService = new ProductService()
-        // const rs = productService.create(req.body)
-        return new APIESuccess("OK", 200, 1).send(res)
+        const productService = new ProductService()
+        const rs = await productService.create(req.body)
+        return new APIESuccess("OK", 200, rs).send(res)
     }
 }
 

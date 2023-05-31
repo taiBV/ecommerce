@@ -12,7 +12,8 @@ class ProductService {
 
     create(params){
         const proModel = new ProductRepository()
-        return proModel.create("1", params)
+
+        return proModel.create("CLOTHING", params)
     }
 }
 

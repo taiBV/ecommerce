@@ -27,6 +27,6 @@ const schemaClothing = new mongoose.Schema({
 });
 module.exports = {
     ProductModel: mongoose.model('ProductModel', schema),
-    ProductElectronic: mongoose.model('ProductElectronic', schemaClothing),
-    ProductClothing: mongoose.model('ProductClothing', schemaElectronic),
+    ProductElectronic: mongoose.model('ProductElectronic', schemaElectronic),
+    ProductClothing: mongoose.model('ProductClothing', schemaClothing),
 }
