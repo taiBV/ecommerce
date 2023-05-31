@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 });
 app.use((err, req, res, next) => {
     // Xử lý lỗi theo ý muốn của bạn
-    // console.error(err);
+    console.error(err);
 
     const statusCode = err.statusCode || 500
     // Phản hồi lại lỗi cho client

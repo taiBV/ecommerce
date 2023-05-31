@@ -5,7 +5,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "phone" : "0326913212",
+  "phone": "0326913212",
   "name": "Shop tai",
   "password": "123456"
 }
@@ -17,9 +17,10 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "phone" : "0326913212",
+  "phone": "0326913212",
   "password": "123456"
 }
+
 ###
 POST http://localhost:1998/api/v1/shop/verifyToken
 apiKey: taibv
@@ -28,5 +29,23 @@ Accept: application/json
 Content-Type: application/json
 
 {
+}
 
+###
+POST http://localhost:1998/api/v1/product/create
+apiKey: taibv
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product_name": "product_name",
+  "product_thumb": "product_thumb",
+  "product_description": "product_description",
+  "product_quantity": "product_quantity",
+  "product_price": 100000,
+  "shop_id": "1",
+  "product_attributes": {
+    "brand": "ADIDAS",
+    "region": "VIET NAM"
+  }
 }

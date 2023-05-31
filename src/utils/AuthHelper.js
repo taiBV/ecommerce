@@ -43,7 +43,9 @@ class AuthHelper {
     }
 
     static verifyApiKey(req, res, next) {
-        console.log('verifyApiKey', req.headers.apikey)
+        if (!req.headers.apiKey){
+            return new APIError("apiKey empty !", 401)
+        }
         req.headers.perrmissons = ['taibv']
         return next();
     }

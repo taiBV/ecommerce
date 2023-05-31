@@ -25,9 +25,6 @@ const schemaClothing = new mongoose.Schema({
     collection: "ProductClothing",
     timestamps: true
 });
-// module.exports = mongoose.model('ProductModel', schema);
-// module.exports = mongoose.model('ProductElectronic', schemaClothing);
-// module.exports = mongoose.model('ProductClothing', schemaElectronic);
 module.exports = {
     ProductModel: mongoose.model('ProductModel', schema),
     ProductElectronic: mongoose.model('ProductElectronic', schemaClothing),

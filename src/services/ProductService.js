@@ -10,10 +10,10 @@ class ProductService {
 
     }
 
-    static create = async phone => {
+    create(params){
         const proModel = new ProductRepository()
-        return proModel.create("1",{name: "taibv"})
+        return proModel.create("1", params)
     }
 }
 
-module.exports = ShopService
+module.exports = ProductService
