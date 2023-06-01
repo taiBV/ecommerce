@@ -48,9 +48,13 @@ class ProductClothingRepository extends ProductFactory{
     }
     async create() {
         // create attribute
-        const saveAttribute = await ProductClothing.create(this.product_attributes)
-        console.log('saveAttribute', saveAttribute)
-        return await super.createProduct()
+        const saveProduct = await super.createProduct()
+        const attrs = {
+            ...this.product_attributes,
+            product_id: saveProduct._id
+        }
+        await ProductClothing.create(attrs)
+        return saveProduct
     }
 }
 
@@ -60,8 +64,13 @@ class ProductElectronicRepository extends ProductFactory{
     }
     async create() {
         // create attribute
-        const saveAttribute = ProductElectronic.create(this.product_attributes)
-        return super.createProduct()
+        const saveProduct = await super.createProduct()
+        const attrs = {
+            ...this.product_attributes,
+            product_id: saveProduct._id
+        }
+        await ProductElectronic.create(attrs)
+        return saveProduct
     }
 }
 module.exports = ProductRepository

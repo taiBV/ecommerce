@@ -33,7 +33,7 @@ class AuthHelper {
     }
 
     static genToken(storeShop) {
-        const accessToken = jwt.sign({info: storeShop}, privateKey, {algorithm: 'RS256', expiresIn: "7d"});
+        const accessToken = jwt.sign({info: storeShop}, privateKey, {algorithm: 'RS256', expiresIn: "30d"});
         const refreshToken = jwt.sign({info: storeShop}, privateKey, {algorithm: 'RS256', expiresIn: "365d"});
 
 
