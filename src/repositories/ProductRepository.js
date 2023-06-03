@@ -15,20 +15,27 @@ class ProductRepository {
 
     }
 
+    static classModelProductType = {}
+
+    getClassProductType() {
+        return ProductRepository.classModelProductType
+    }
+
+    static registerClassProductType(type, classModel) {
+        ProductRepository.classModelProductType[type] = classModel
+    }
+
     create(type, params) {
-        switch (type) {
-            case "CLOTHING":
-                return new ProductClothingRepository(params).create()
-            case "ELECTRONIC":
-                return new ProductElectronicRepository(params).create()
-            default:
-                throw new APIError("Type Product not exist")
-        }
+        const classProduct = this.getClassProductType()[type]
+
+        if (classProduct === undefined) throw new APIError("Type Product not exist")
+
+        return new classProduct(params).create()
     }
 }
 
 class ProductFactory {
-    constructor(params){
+    constructor(params) {
         this.product_name = params.product_name
         this.product_thumb = params.product_thumb
         this.product_description = params.product_description
@@ -42,10 +49,12 @@ class ProductFactory {
         return await ProductModel.create(this);
     }
 }
-class ProductClothingRepository extends ProductFactory{
+
+class ProductClothingRepository extends ProductFactory {
     constructor(params) {
         super(params);
     }
+
     async create() {
         // create attribute
         const saveProduct = await super.createProduct()
@@ -58,10 +67,11 @@ class ProductClothingRepository extends ProductFactory{
     }
 }
 
-class ProductElectronicRepository extends ProductFactory{
+class ProductElectronicRepository extends ProductFactory {
     constructor(params) {
         super(params);
     }
+
     async create() {
         // create attribute
         const saveProduct = await super.createProduct()
@@ -73,4 +83,9 @@ class ProductElectronicRepository extends ProductFactory{
         return saveProduct
     }
 }
+
+// Init Class Model Product Type
+ProductRepository.registerClassProductType("CLOTHING", ProductClothingRepository)
+ProductRepository.registerClassProductType("ELECTRONIC", ProductElectronicRepository)
+
 module.exports = ProductRepository
