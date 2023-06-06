@@ -9,6 +9,7 @@
 * */
 const {ProductModel, ProductElectronic, ProductClothing} = require("../models/Product")
 const {APIError} = require("../core/Response");
+const InventRepository = require("../repositories/InventRepository")
 
 class ProductRepository {
     constructor() {
@@ -25,12 +26,26 @@ class ProductRepository {
         ProductRepository.classModelProductType[type] = classModel
     }
 
-    create(type, params) {
+    async create(type, params) {
         const classProduct = this.getClassProductType()[type]
 
         if (classProduct === undefined) throw new APIError("Type Product not exist")
 
-        return new classProduct(params).create()
+        const newProduct = await new classProduct(params).create();
+        console.log('newProduct', newProduct)
+        if (newProduct) {
+            const inventObj = {
+                shop_id: params.shop_id,
+                product_id: newProduct._id,
+                product_qty: params.product_quantity,
+                booking_order: [],
+            }
+            console.log('inventObj', inventObj)
+            const inventRepo = new InventRepository()
+            inventRepo.create(inventObj)
+        }
+
+        return newProduct
     }
 }
 

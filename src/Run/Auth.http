@@ -38,7 +38,7 @@ access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7InBob25lIjoiMDk2N
 Content-Type: application/json
 
 {
-  "product_name": "product_name",
+  "product_name": "product_name3",
   "product_thumb": "product_thumb",
   "product_description": "product_description",
   "product_quantity": 2,
